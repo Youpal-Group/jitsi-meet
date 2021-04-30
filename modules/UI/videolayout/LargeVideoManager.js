@@ -647,6 +647,15 @@ export default class LargeVideoManager {
         this.videoContainer.setLocalFlipX(val);
     }
 
+
+    /**
+     * Changes the flipY state of the local video.
+     * @param val {boolean} true if flipped.
+     */
+    onLocalFlipYChange(val) {
+        this.videoContainer.setLocalFlipY(val);
+    }
+
     /**
      * Dispatches an action to update the known resolution state of the large video and adjusts container sizes when the
      * resolution changes.

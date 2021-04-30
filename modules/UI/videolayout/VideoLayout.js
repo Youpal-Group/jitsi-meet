@@ -29,6 +29,19 @@ const VideoLayout = {
         }
     },
 
+
+    /**
+     * Handler for local flip Y changed event.
+     */
+     onLocalFlipYChanged() {
+        if (largeVideo) {
+            const { store } = APP;
+            const { localFlipY } = store.getState()['features/base/settings'];
+
+            largeVideo.onLocalFlipYChange(localFlipY);
+        }
+    },
+
     /**
      * Cleans up state of this singleton {@code VideoLayout}.
      *

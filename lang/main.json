@@ -902,6 +902,7 @@
         "domuteOthers": "Mute everyone else",
         "domuteVideoOfOthers": "Disable camera of everyone else",
         "flip": "Flip",
+        "flipVertical": "Flip Vertical",
         "grantModerator": "Grant Moderator",
         "kick": "Kick out",
         "moderator": "Moderator",

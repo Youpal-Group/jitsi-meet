@@ -19,6 +19,11 @@ type Props = {
     _localFlipX: boolean,
 
     /**
+     * The current local flip y status.
+     */
+     _localFlipY: boolean,
+
+    /**
      * The redux dispatch function.
      */
     dispatch: Function,
@@ -46,6 +51,7 @@ class FlipLocalVideoButton extends PureComponent<Props> {
 
         // Bind event handlers so they are only bound once for every instance.
         this._onClick = this._onClick.bind(this);
+        this._onClickVertical = this._onClickVertical.bind(this);
     }
 
     /**
@@ -60,15 +66,22 @@ class FlipLocalVideoButton extends PureComponent<Props> {
         } = this.props;
 
         return (
+            <view><VideoMenuButton
+            buttonText = { t('videothumbnail.flip') }
+            displayClass = 'fliplink'
+            id = 'flipLocalVideoButton'
+            onClick = { this._onClick } />
             <VideoMenuButton
-                buttonText = { t('videothumbnail.flip') }
-                displayClass = 'fliplink'
-                id = 'flipLocalVideoButton'
-                onClick = { this._onClick } />
+            buttonText = { t('videothumbnail.flipVertical') }
+            displayClass = 'fliplink'
+            id = 'flipLocalVideoButton'
+            onClick = { this._onClickVertical } /></view>    
+            
         );
     }
 
     _onClick: () => void;
+    _onClickVertical: () => void;
 
     /**
      * Flips the local video.
@@ -80,7 +93,15 @@ class FlipLocalVideoButton extends PureComponent<Props> {
         const { _localFlipX, dispatch } = this.props;
 
         dispatch(updateSettings({
-            localFlipX: !_localFlipX
+            localFlipX: !_localFlipX,
+          }));
+    }
+
+    _onClickVertical() {
+        const { _localFlipY, dispatch } = this.props;
+
+        dispatch(updateSettings({
+            localFlipY: !_localFlipY,
         }));
     }
 }
@@ -93,10 +114,11 @@ class FlipLocalVideoButton extends PureComponent<Props> {
  * @returns {Props}
  */
 function _mapStateToProps(state) {
-    const { localFlipX } = state['features/base/settings'];
+    const { localFlipX, localFlipY } = state['features/base/settings'];
 
     return {
         _localFlipX: Boolean(localFlipX)
+        ,_localFlipY: Boolean(localFlipY)
     };
 }
 
