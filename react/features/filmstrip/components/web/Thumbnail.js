@@ -174,6 +174,11 @@ export type Props = {|
      */
     _localFlipX: boolean,
 
+     /**
+     * The current local video flip setting.
+     */
+      _localFlipY: boolean,
+
     /**
      * An object with information about the participant related to the thumbnaul.
      */
@@ -727,6 +732,7 @@ class Thumbnail extends Component<Props, State> {
             _disableLocalVideoFlip,
             _isScreenSharing,
             _localFlipX,
+            _localFlipY,
             _disableProfile,
             _participant,
             _videoTrack
@@ -997,7 +1003,7 @@ function _mapStateToProps(state, ownProps): Object {
         iAmSipGateway
     } = state['features/base/config'];
     const { NORMAL = 8 } = interfaceConfig.INDICATOR_FONT_SIZES || {};
-    const { localFlipX } = state['features/base/settings'];
+    const { localFlipX,localFlipY } = state['features/base/settings'];
 
 
     switch (_currentLayout) {
@@ -1053,6 +1059,7 @@ function _mapStateToProps(state, ownProps): Object {
         _isVideoPlayable: isVideoPlayable(state, id),
         _indicatorIconSize: NORMAL,
         _localFlipX: Boolean(localFlipX),
+        _localFlipY: Boolean(localFlipY),
         _participant: participant,
         _participantCount: getParticipantCount(state),
         _startSilent: Boolean(startSilent),

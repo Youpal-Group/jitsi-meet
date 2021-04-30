@@ -193,6 +193,7 @@ export class VideoContainer extends LargeContainer {
         this.userId = null;
         this.videoType = null;
         this.localFlipX = true;
+        this.localFlipY = false;
         this.resizeContainer = resizeContainer;
 
         /**
@@ -490,8 +491,15 @@ export class VideoContainer extends LargeContainer {
 
         const flipX = stream.isLocal() && this.localFlipX && !this.isScreenSharing();
 
+        const flipY = stream.isLocal() && this.localFlipY && !this.isScreenSharing();
+
         this.$video.css({
             transform: flipX ? 'scaleX(-1)' : 'none'
+        });
+
+        
+        this.$video.css({
+            transform: flipY ? 'scaleY(-1)' : 'none'
         });
 
         this._updateBackground();
@@ -513,6 +521,22 @@ export class VideoContainer extends LargeContainer {
         this._updateBackground();
     }
 
+
+     /**
+     * Changes the flipY state of the local video.
+     * @param val {boolean} true if flipped.
+     */
+    setLocalFlipY(val) {
+        this.localFlipY = val;
+        if (!this.$video || !this.stream || !this.stream.isLocal()) {
+            return;
+        }
+        this.$video.css({
+                transform: this.localFlipY ? 'scaleY(-1)' : 'none'
+        });
+    
+        this._updateBackground();
+    }
 
     /**
      * Check if current video stream is screen sharing.
