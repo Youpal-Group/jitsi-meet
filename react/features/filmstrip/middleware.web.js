@@ -52,6 +52,11 @@ MiddlewareRegistry.register(store => next => action => {
             // TODO: This needs to be removed once the large video is Reactified.
             VideoLayout.onLocalFlipXChanged();
         }
+
+        if (typeof action.settings?.localFlipY === 'boolean') {
+            VideoLayout.onLocalFlipYChanged();
+        }
+
         break;
     }
     }
