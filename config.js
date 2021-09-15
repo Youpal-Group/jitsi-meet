@@ -45,9 +45,12 @@ var config = {
         // disabled by the below option.
         // enableThumbnailReordering: true,
 
+        // Enables XMPP WebSocket (as opposed to BOSH) for the given amount of users.
+        // mobileXmppWsThreshold: 10 // enable XMPP WebSockets on mobile for 10% of the users
+
         // P2P test mode disables automatic switching to P2P when there are 2
         // participants in the conference.
-        p2pTestMode: false
+        // p2pTestMode: false,
 
         // Enables the test specific features consumed by jitsi-meet-torture
         // testMode: false
@@ -737,6 +740,7 @@ var config = {
 
     // Array<string> of disabled sounds.
     // Possible values:
+    // - 'ASKED_TO_UNMUTE_SOUND'
     // - 'E2EE_OFF_SOUND'
     // - 'E2EE_ON_SOUND'
     // - 'INCOMING_MSG_SOUND'
