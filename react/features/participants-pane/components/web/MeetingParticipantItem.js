@@ -80,6 +80,11 @@ type Props = {
     _quickActionButtonType: string,
 
     /**
+     * Time when the participant have raised hand.
+     */
+    _raisedAt: number,
+
+    /**
      * True if the participant have raised hand.
      */
     _raisedHand: boolean,
@@ -136,6 +141,11 @@ type Props = {
     participantID: ?string,
 
     /**
+     * Participant Id have raised hand first.
+     */
+     raisedFirstId: string,
+
+    /**
      * The translated "you" text.
      */
     youText: string
@@ -157,6 +167,7 @@ function MeetingParticipantItem({
     _participant,
     _participantID,
     _quickActionButtonType,
+    _raisedAt,
     _raisedHand,
     askUnmuteText,
     isHighlighted,
@@ -167,6 +178,7 @@ function MeetingParticipantItem({
     openDrawerForParticipant,
     overflowDrawer,
     participantActionEllipsisLabel,
+    raisedFirstId,
     youText
 }: Props) {
 
@@ -214,6 +226,8 @@ function MeetingParticipantItem({
             openDrawerForParticipant = { openDrawerForParticipant }
             overflowDrawer = { overflowDrawer }
             participantID = { _participantID }
+            raisedAt = { _raisedAt }
+            raisedFirst = { raisedFirstId && raisedFirstId === _participantID }
             raisedHand = { _raisedHand }
             videoMediaState = { _videoMediaState }
             youText = { youText }>
@@ -276,7 +290,8 @@ function _mapStateToProps(state, ownProps): Object {
         _participant: participant,
         _participantID: participant?.id,
         _quickActionButtonType,
-        _raisedHand: Boolean(participant?.raisedHand)
+        _raisedAt: participant?.raisedHand?.raisedAt || 0,
+        _raisedHand: Boolean(participant?.raisedHand?.enabled)
     };
 }
 
