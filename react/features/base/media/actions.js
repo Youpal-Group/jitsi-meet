@@ -9,9 +9,11 @@ import { isModerationNotificationDisplayed } from '../../notifications';
 import {
     SET_AUDIO_MUTED,
     SET_AUDIO_AVAILABLE,
+    SET_AUDIO_UNMUTE_PERMISSIONS,
     SET_CAMERA_FACING_MODE,
     SET_VIDEO_AVAILABLE,
     SET_VIDEO_MUTED,
+    SET_VIDEO_UNMUTE_PERMISSIONS,
     STORE_VIDEO_TRANSFORM,
     TOGGLE_CAMERA_FACING_MODE
 } from './actionTypes';
@@ -56,6 +58,21 @@ export function setAudioMuted(muted: boolean, ensureTrack: boolean = false) {
         type: SET_AUDIO_MUTED,
         ensureTrack,
         muted
+    };
+}
+
+/**
+ * Action to disable/enable the audio mute icon.
+ *
+ * @param {boolean} blocked - True if the audio mute icon needs to be disabled.
+ * @param {boolean|undefined} skipNotification - True if we want to skip showing the notification.
+ * @returns {Function}
+ */
+export function setAudioUnmutePermissions(blocked: boolean, skipNotification: boolean = false) {
+    return {
+        type: SET_AUDIO_UNMUTE_PERMISSIONS,
+        blocked,
+        skipNotification
     };
 }
 
@@ -133,6 +150,21 @@ export function setVideoMuted(
             ensureTrack,
             muted: newValue
         });
+    };
+}
+
+/**
+ * Action to disable/enable the video mute icon.
+ *
+ * @param {boolean} blocked - True if the video mute icon needs to be disabled.
+ * @param {boolean|undefined} skipNotification - True if we want to skip showing the notification.
+ * @returns {Function}
+ */
+export function setVideoUnmutePermissions(blocked: boolean, skipNotification: boolean = false) {
+    return {
+        type: SET_VIDEO_UNMUTE_PERMISSIONS,
+        blocked,
+        skipNotification
     };
 }
 

@@ -1,7 +1,7 @@
 // @flow
 
 import { ColorSchemeRegistry, schemeColor } from '../../../base/color-scheme';
-import { BoxModel, ColorPalette } from '../../../base/styles';
+import BaseTheme from '../../../base/ui/components/BaseTheme.native';
 
 const BUTTON_SIZE = 48;
 
@@ -27,7 +27,7 @@ const toolbarButton = {
  */
 const toolbarButtonIcon = {
     alignSelf: 'center',
-    color: ColorPalette.darkGrey,
+    color: BaseTheme.palette.icon04,
     fontSize: 24
 };
 
@@ -37,7 +37,7 @@ const toolbarButtonIcon = {
  */
 const whiteToolbarButtonIcon = {
     ...toolbarButtonIcon,
-    color: ColorPalette.white
+    color: BaseTheme.palette.icon01
 };
 
 /**
@@ -56,15 +56,15 @@ const reactionButton = {
  */
 const reactionEmoji = {
     fontSize: 20,
-    color: ColorPalette.white
+    color: BaseTheme.palette.icon01
 };
 
 const reactionMenu = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: ColorPalette.black,
-    padding: 16
+    backgroundColor: BaseTheme.palette.bottomSheet,
+    padding: BaseTheme.spacing[3]
 };
 
 /**
@@ -82,23 +82,25 @@ const styles = {
      */
     toolbox: {
         alignItems: 'center',
-        backgroundColor: ColorPalette.darkBackground,
+        backgroundColor: BaseTheme.palette.uiBackground,
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
         flexDirection: 'row',
         flexGrow: 0,
         justifyContent: 'space-between',
-        paddingHorizontal: BoxModel.margin,
-        paddingVertical: 8
+        margin: BaseTheme.spacing[2]
     },
 
     /**
      * The style of the root/top-level container of {@link Toolbox}.
      */
     toolboxContainer: {
+        backgroundColor: BaseTheme.palette.uiBackground,
         flexDirection: 'column',
         flexGrow: 0,
+        height: '100%',
         width: '100%',
+        maxHeight: 80,
         maxWidth: 580,
         marginLeft: 'auto',
         marginRight: 'auto'
@@ -128,7 +130,7 @@ ColorSchemeRegistry.register('Toolbox', {
     },
 
     backgroundToggle: {
-        backgroundColor: ColorPalette.toggled
+        backgroundColor: BaseTheme.palette.ui13
     },
 
     hangupButtonStyles: {
@@ -137,7 +139,7 @@ ColorSchemeRegistry.register('Toolbox', {
             ...toolbarButton,
             backgroundColor: schemeColor('hangup')
         },
-        underlayColor: ColorPalette.buttonUnderlay
+        underlayColor: BaseTheme.palette.underlay01
     },
 
     reactionDialog: {
@@ -165,21 +167,21 @@ ColorSchemeRegistry.register('Toolbox', {
 
     reactionButton: {
         style: reactionButton,
-        underlayColor: ColorPalette.toggled,
+        underlayColor: BaseTheme.palette.ui13,
         emoji: reactionEmoji
     },
 
     raiseHandButton: {
         style: {
             ...reactionButton,
-            backgroundColor: ColorPalette.toggled,
+            backgroundColor: BaseTheme.palette.ui13,
             width: '100%',
             borderRadius: 6
         },
-        underlayColor: ColorPalette.toggled,
+        underlayColor: BaseTheme.palette.ui13,
         emoji: reactionEmoji,
         text: {
-            color: ColorPalette.white,
+            color: BaseTheme.palette.text01,
             fontWeight: '600',
             marginLeft: 8,
             lineHeight: 24
@@ -192,7 +194,7 @@ ColorSchemeRegistry.register('Toolbox', {
     },
 
     emojiAnimation: {
-        color: ColorPalette.white,
+        color: BaseTheme.palette.icon01,
         position: 'absolute',
         zIndex: 1001,
         elevation: 2,

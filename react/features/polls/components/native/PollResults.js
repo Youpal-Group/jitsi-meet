@@ -38,7 +38,9 @@ const PollResults = (props: AbstractProps) => {
     const renderHeader = (answer: string, percentage: number, nbVotes: number) => (
         <View style = { resultsStyles.answerHeader }>
             <Text style = { resultsStyles.answer }>{ answer }</Text>
-            <Text style = { resultsStyles.answer }>({nbVotes}) {percentage}%</Text>
+            <View>
+                <Text style = { resultsStyles.answer }>({nbVotes}) {percentage}%</Text>
+            </View>
 
             {/* <Text style = { resultsStyles.answer }>{ answer } - { percentage }%</Text>
             <Text style = { resultsStyles.answerVoteCount }>
@@ -48,8 +50,9 @@ const PollResults = (props: AbstractProps) => {
     );
 
     /**
-     * Render voters of and answer
-     * @param {AnswerInfo} answer - the answer info
+     * Render voters of and answer.
+     *
+     * @param {AnswerInfo} answer - The answer info.
      * @returns {React.Node}
      */
     const renderRow = useCallback((answer: AnswerInfo) => {
@@ -62,7 +65,11 @@ const PollResults = (props: AbstractProps) => {
                     { voters && voterCount > 0
                     && <View style = { resultsStyles.voters }>
                         {voters.map(({ id, name: voterName }) =>
-                            <Text key = { id }>{ voterName }</Text>
+                            (<Text
+                                key = { id }
+                                style = { resultsStyles.voter }>
+                                { voterName }
+                            </Text>)
                         )}
                     </View>}
                 </View>

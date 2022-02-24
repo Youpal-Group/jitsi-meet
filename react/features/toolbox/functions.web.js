@@ -1,7 +1,11 @@
 // @flow
-
 import { getToolbarButtons } from '../base/config';
 import { hasAvailableDevices } from '../base/devices';
+import { isScreenMediaShared } from '../screen-share/functions';
+
+import { TOOLBAR_TIMEOUT } from './constants';
+
+export * from './functions.any';
 
 /**
  * Helper for getting the height of the toolbox.
@@ -37,16 +41,16 @@ export function isButtonEnabled(name: string, state: Object) {
  * otherwise.
  */
 export function isToolboxVisible(state: Object) {
-    const { iAmSipGateway } = state['features/base/config'];
+    const { iAmRecorder, iAmSipGateway, toolbarConfig } = state['features/base/config'];
+    const { alwaysVisible } = toolbarConfig || {};
     const {
-        alwaysVisible,
         timeoutID,
         visible
     } = state['features/toolbox'];
     const { audioSettingsVisible, videoSettingsVisible } = state['features/settings'];
 
-    return Boolean(!iAmSipGateway && (timeoutID || visible || alwaysVisible
-                                      || audioSettingsVisible || videoSettingsVisible));
+    return Boolean(!iAmRecorder && !iAmSipGateway
+            && (timeoutID || visible || alwaysVisible || audioSettingsVisible || videoSettingsVisible));
 }
 
 /**
@@ -56,9 +60,23 @@ export function isToolboxVisible(state: Object) {
  * @returns {boolean}
  */
 export function isAudioSettingsButtonDisabled(state: Object) {
-    return (!hasAvailableDevices(state, 'audioInput')
-          && !hasAvailableDevices(state, 'audioOutput'))
+
+    return !(hasAvailableDevices(state, 'audioInput')
+          && hasAvailableDevices(state, 'audioOutput'))
           || state['features/base/config'].startSilent;
+}
+
+/**
+ * Indicates if the desktop share button is disabled or not.
+ *
+ * @param {Object} state - The state from the Redux store.
+ * @returns {boolean}
+ */
+export function isDesktopShareButtonDisabled(state: Object) {
+    const { muted, unmuteBlocked } = state['features/base/media'].video;
+    const videoOrShareInProgress = !muted || isScreenMediaShared(state);
+
+    return unmuteBlocked && !videoOrShareInProgress;
 }
 
 /**
@@ -78,7 +96,9 @@ export function isVideoSettingsButtonDisabled(state: Object) {
  * @returns {boolean}
  */
 export function isVideoMuteButtonDisabled(state: Object) {
-    return !hasAvailableDevices(state, 'videoInput');
+    const { muted, unmuteBlocked } = state['features/base/media'].video;
+
+    return !hasAvailableDevices(state, 'videoInput') || (unmuteBlocked && Boolean(muted));
 }
 
 /**
@@ -100,4 +120,16 @@ export function showOverflowDrawer(state: Object) {
  */
 export function isToolboxEnabled(state: Object) {
     return state['features/toolbox'].enabled;
+}
+
+/**
+ * Returns the toolbar timeout from config or the default value.
+ *
+ * @param {Object} state - The state from the Redux store.
+ * @returns {number} - Toolbar timeout in miliseconds.
+ */
+export function getToolbarTimeout(state: Object) {
+    const { toolbarConfig: { timeout } } = state['features/base/config'];
+
+    return timeout || TOOLBAR_TIMEOUT;
 }
